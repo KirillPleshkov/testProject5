@@ -13,7 +13,9 @@ class Car(models.Model):
     description = models.TextField(verbose_name="описание")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="создано")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="обновлено")
-    owner = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name="владелец")
+    owner = models.ForeignKey(
+        User, on_delete=models.PROTECT, related_name="car", verbose_name="владелец"
+    )
 
     class Meta:
         verbose_name = "автомобиль"

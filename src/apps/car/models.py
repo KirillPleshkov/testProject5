@@ -5,6 +5,8 @@ User = get_user_model()
 
 
 class Car(models.Model):
+    """Модель автомобиля"""
+
     make = models.CharField(max_length=100, verbose_name="марка")
     model = models.CharField(max_length=100, verbose_name="модель")
     year = models.PositiveIntegerField(verbose_name="год выпуска")

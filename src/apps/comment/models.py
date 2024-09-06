@@ -23,7 +23,10 @@ class Comment(models.Model):
         verbose_name_plural = "комментарии"
 
     def __str__(self):
+        MAX_CONTENT_LEN = 15
         shortened_content = (
-            self.content if len(self.content) < 10 else self.content[:10] + "..."
+            self.content
+            if len(self.content) <= MAX_CONTENT_LEN
+            else self.content[:MAX_CONTENT_LEN] + "..."
         )
         return f"{shortened_content} ({self.author})"

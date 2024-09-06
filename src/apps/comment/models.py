@@ -29,4 +29,4 @@ class Comment(models.Model):
             if len(self.content) <= MAX_CONTENT_LEN
             else self.content[:MAX_CONTENT_LEN] + "..."
         )
-        return f"{shortened_content} ({self.author})"
+        return shortened_content

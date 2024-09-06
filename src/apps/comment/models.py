@@ -1,3 +1,29 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 
-# Create your models here.
+from src.apps.car.models import Car
+
+User = get_user_model()
+
+
+class Comment(models.Model):
+    """Модель комментария к автомобилю"""
+
+    content = models.TextField(verbose_name="содержимое")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="создано")
+    car = models.ForeignKey(
+        Car, on_delete=models.CASCADE, related_name="comment", verbose_name="автомобиль"
+    )
+    author = models.ForeignKey(
+        User, on_delete=models.PROTECT, related_name="comment", verbose_name="автор"
+    )
+
+    class Meta:
+        verbose_name = "комментарий"
+        verbose_name_plural = "комментарии"
+
+    def __str__(self):
+        shortened_content = (
+            self.content if len(self.content) < 10 else self.content[:10] + "..."
+        )
+        return f"{shortened_content} ({self.author})"

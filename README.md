@@ -129,6 +129,9 @@
 6. Поднимите Docker контейнер.
 ```docker-compose up```
 
+7. Примените миграции.
+```python src/manage.py migrate```
+
 8. Создайте суперпользователя.
 ```python src/manage.py createsuperuser```
 
@@ -149,3 +152,130 @@ POSTGRES_PASSWORD=rootroot (password пользователя postgres)
 POSTGRES_PORT=5432 (порт postgres)
 
 SECRET_KEY=<SECRET_KEY> (сгенерируйте секретный ключ)
+
+## Документация API
+
+#### Регистрация пользователя
+POST: ```/api/auth/register/```
+
+Body:
+```json
+{
+    "username": "admin_test",
+    "email": "admin_test@a.ru",
+    "password": "admin_test"
+}
+```
+
+Примечание:  
+- "email": обязательный формат 'email'
+- Поля "username", "email", "password" - обязательные
+
+Response:
+```json
+{
+    "username": "admin_test",
+    "email": "admin_test@a.ru"
+}
+```
+
+Status Codes:
+- 201 Created  
+- 400 Bad Request
+
+
+#### Авторизация пользователя
+POST: ```/api/auth/register/```
+
+Body:
+```json
+{
+    "username": "admin_test",
+    "password": "admin_test"
+}
+```
+
+Примечание:  
+- Поля "username", "password" - обязательные;
+- В ответе получаем access и refresh токены и самого пользователя.
+
+Response:
+```json
+{
+    "access": "eyJhbGciOiJIUz...",
+    "refresh": "eyJhbGciOiJIUz...",
+    "user": {
+        "pk": 8,
+        "username": "admin_test",
+        "email": "admin_test@a.ru",
+        "first_name": "",
+        "last_name": ""
+    }
+}
+```
+
+Status Codes:
+- 200 OK 
+- 400 Bad Request
+
+
+
+#### Проверка валидности JWT токена
+POST: ```/api/auth/token/verify/```
+
+Body:
+```json
+{
+    "token": "eyJhbGciOiJIUz..."
+}
+```
+
+Примечание:  
+- Поле "token" - обязательное;
+- В ответе получаем statusCode: 200 (OK) - токен валидный, 401 (Unauthorized) - токен не валидный.
+
+Response:
+```json
+{}
+```
+
+Status Codes:
+- 200 OK 
+- 401 Unauthorized
+
+
+
+#### Refresh токена
+POST: ```/api/auth/token/refresh/```
+
+Body:
+```json
+{
+    "refresh": "eyJhbGciOiJIUz..."
+}
+```
+
+Примечание:  
+- Поле "refresh" - обязательное;
+- В ответе получаем новый access токен и время когда его действие окончится.
+
+Response:
+```json
+{
+    "access": "eyJhbGciOiJIUz...",
+    "access_expiration": "2024-09-07T10:16:04.788832Z"
+}
+```
+
+Status Codes:
+- 200 OK 
+- 401 Unauthorized
+
+
+
+## Авторизация 
+
+Авторизация реализована с использованием JWT-токенов (access, refresh). 
+Для ее реализации используются пакеты: djangorestframework-simplejwt, dj-rest-auth, django-allauth.
+Время жизни токена настраивается в настройках (SIMPLE_JWT). 
+

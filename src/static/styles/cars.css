@@ -1,0 +1,47 @@
+.content {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    min-height: 94vh;
+    margin: 0;
+}
+
+.car-list {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px; /* Ширина карточки */
+}
+
+.car-item {
+    margin-bottom: 15px;
+    text-align: left; /* Выравниваем текст по левому краю */
+    padding-bottom: 10px;
+    border-bottom: 2px solid  #007bff;
+    height: min-content;
+}
+
+.car-item h3 {
+    margin: 10px 0;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end; /* Выравниваем кнопку вправо */
+}
+
+.car-link {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.car-link:hover {
+    background-color: #0056b3;
+}

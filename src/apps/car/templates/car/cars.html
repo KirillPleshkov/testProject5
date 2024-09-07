@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'styles/cars.css' %}" type="text/css">
+    <div class="content">
+        <div class="car-list">
+            <h2>Список автомобилей</h2>
+            {% for car in cars %}
+                <div class="car-item">
+                    <h3>{{ car.make }} {{ car.model }} ({{ car.year }})</h3>
+                    <p>{{ car.description }}</p>
+                    <div class="button-container">
+                        <a href="" class="car-link">Подробнее</a>
+                    </div>
+                </div>
+            {% empty %}
+                <p>Нет доступных автомобилей.</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

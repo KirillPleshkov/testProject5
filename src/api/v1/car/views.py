@@ -8,7 +8,6 @@ from rest_framework import status
 from src.api.auth.permissions import IsOwnerOrReadOnlyAndCreate
 from src.apps.car.models import Car
 from src.apps.car.serializers import CarSerializer
-from src.apps.comment.models import Comment
 from src.apps.comment.serializers import CommentSerializer
 
 

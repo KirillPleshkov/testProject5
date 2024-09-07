@@ -1,3 +1,4 @@
+from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv
 import os
@@ -21,6 +22,10 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Packets
     "rest_framework",
+    "rest_framework.authtoken",
+    "allauth",
+    "dj_rest_auth",
+    "rest_framework_simplejwt",
     # Apps
     "src.apps.car",
     "src.apps.comment",
@@ -93,3 +98,30 @@ USE_TZ = True
 STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# DRF
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ]
+}
+
+# SIMPLE_JWT
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "ROTATE_REFRESH_TOKENS": False,
+    "BLACKLIST_AFTER_ROTATION": False,
+    "UPDATE_LAST_LOGIN": True,
+    "SIGNING_KEY": os.getenv("SECRET_KEY"),
+    "ALGORITHM": "HS512",
+}
+
+# dj-rest-auth
+
+REST_AUTH = {
+    "USE_JWT": True,
+    "JWT_AUTH_HTTPONLY": False,
+}

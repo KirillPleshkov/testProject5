@@ -12,10 +12,13 @@ class Comment(models.Model):
     content = models.TextField(verbose_name="содержимое")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="создано")
     car = models.ForeignKey(
-        Car, on_delete=models.CASCADE, related_name="comment", verbose_name="автомобиль"
+        Car,
+        on_delete=models.CASCADE,
+        related_name="comments",
+        verbose_name="автомобиль",
     )
     author = models.ForeignKey(
-        User, on_delete=models.PROTECT, related_name="comment", verbose_name="автор"
+        User, on_delete=models.PROTECT, related_name="comments", verbose_name="автор"
     )
 
     class Meta:

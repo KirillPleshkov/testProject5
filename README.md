@@ -183,7 +183,7 @@ Status Codes:
 - 201 Created  
 - 400 Bad Request
 
-
+---
 #### Авторизация пользователя
 POST: ```/api/auth/register/```
 
@@ -219,7 +219,7 @@ Status Codes:
 - 400 Bad Request
 
 
-
+---
 #### Проверка валидности JWT токена
 POST: ```/api/auth/token/verify/```
 
@@ -244,7 +244,7 @@ Status Codes:
 - 401 Unauthorized
 
 
-
+---
 #### Refresh токена
 POST: ```/api/auth/token/refresh/```
 
@@ -270,6 +270,251 @@ Response:
 Status Codes:
 - 200 OK 
 - 401 Unauthorized
+
+---
+#### Получение списка автомобилей
+GET: ```/api/cars/```
+
+Body:
+```json
+{}
+```
+
+Response:
+```json
+[
+  {
+        "id": 1,
+        "make": "Toyota",
+        "model": "Camry",
+        "year": 2021,
+        "description": "Компактный седан с отличной экономией топлива и современными технологиями безопасности.",
+        "created_at": "2024-09-06T09:05:33.041535Z",
+        "updated_at": "2024-09-07T09:29:03.088728Z",
+        "owner": 1
+    },
+  ...
+]
+```
+
+Status Codes:
+- 200 OK
+
+---
+#### Получение конкретного автомобиля
+GET: ```/api/cars/<id>/```
+
+Body:
+```json
+{}
+```
+
+Response:
+```json
+{
+    "id": 1,
+    "make": "Toyota",
+    "model": "Camry",
+    "year": 2021,
+    "description": "Компактный седан с отличной экономией топлива и современными технологиями безопасности.",
+    "created_at": "2024-09-06T09:05:33.041535Z",
+    "updated_at": "2024-09-07T09:29:03.088728Z", 
+    "owner": 1
+}
+```
+
+Status Codes:
+- 200 OK
+- 404 Not Found
+
+---
+#### Создание автомобиля
+POST: ```/api/cars/```
+
+Body:
+```json
+{
+    "make": "Марка",
+    "model": "Модель",
+    "year": 2021,
+    "description": "Описание"
+}
+```
+
+Headers:
+```
+"Authorization": 'Bearer eyJhbGciOiJIUz...'
+```
+
+Примечание:
+- Обязательные поля: "make", "model", "year", "description";
+- Обязательный заголовок: Authorization (передаем access токен)
+
+Response:
+```json
+{
+    "id": 7,
+    "make": "Марка",
+    "model": "Модель",
+    "year": 2021,
+    "description": "Описание",
+    "created_at": "2024-09-07T09:49:33.232902Z",
+    "updated_at": "2024-09-07T09:49:33.232916Z",
+    "owner": 8
+}
+```
+
+Status Codes:
+- 201 Created
+- 400 Bad Request
+- 401 Unauthorized
+
+
+---
+#### Обновление автомобиля
+PUT: ```/api/cars/<id>/```
+
+Body:
+```json
+{
+    "make": "Марка новая",
+    "model": "Модель новая",
+    "year": 2021,
+    "description": "Описание новое"
+}
+```
+
+Headers:
+```
+"Authorization": 'Bearer eyJhbGciOiJIUz...'
+```
+
+Примечание:
+- Обязательные поля: "make", "model", "year", "description";
+- Обязательный заголовок: Authorization (передаем access токен)
+
+Response:
+```json
+{
+    "id": 7,
+    "make": "Марка новая",
+    "model": "Модель новая",
+    "year": 2021,
+    "description": "Описание новое",
+    "created_at": "2024-09-07T09:49:33.232902Z",
+    "updated_at": "2024-09-07T09:56:25.012490Z",
+    "owner": 8
+}
+```
+
+Status Codes:
+- 200 OK
+- 400 Bad Request
+- 401 Unauthorized
+- 404 Not Found
+
+
+---
+#### Удаление автомобиля
+DELETE: ```/api/cars/<id>/```
+
+Body:
+```json
+{}
+```
+
+Headers:
+```
+"Authorization": 'Bearer eyJhbGciOiJIUz...'
+```
+
+Примечание:
+- Обязательный заголовок: Authorization (передаем access токен)
+
+Response:
+```json
+{}
+```
+
+Status Codes:
+- 200 OK
+- 401 Unauthorized
+- 403 Forbidden
+- 404 Not Found
+
+---
+#### Добавление комментария к автомобилю
+POST: ```/api/cars/<id>/comments/```
+
+Body:
+```json
+{
+    "content": "Содержимое комментария"
+}
+```
+
+Headers:
+```
+"Authorization": 'Bearer eyJhbGciOiJIUz...'
+```
+
+Примечание:
+- Обязательное поле: "content";
+- Обязательный заголовок: Authorization (передаем access токен)
+
+Response:
+```json
+{
+    "id": 7,
+    "content": "Содержимое комментария",
+    "created_at": "2024-09-07T10:02:41.094621Z",
+    "car": 1,
+    "author": 8
+}
+```
+
+Status Codes:
+- 201 Created
+- 400 Bad Request
+- 401 Unauthorized
+
+---
+#### Получение комментариев к автомобилю
+GET: ```/api/cars/<id>/comments/```
+
+Body:
+```json
+{}
+```
+
+Headers:
+```
+"Authorization": 'Bearer eyJhbGciOiJIUz...'
+```
+
+Примечание:
+- Обязательный заголовок: Authorization (передаем access токен)
+
+Response:
+```json
+[ 
+  ...,
+    {
+        "id": 7,
+        "content": "Содержимое комментария",
+        "created_at": "2024-09-07T10:02:41.094621Z",
+        "car": 1,
+        "author": 8
+    },
+  ...
+]
+```
+
+Status Codes:
+- 200 OK
+- 400 Bad Request
+- 401 Unauthorized
+- 404 Not Found
 
 
 

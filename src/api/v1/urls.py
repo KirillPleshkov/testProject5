@@ -5,7 +5,7 @@ from src.api.v1.car.views import CarViewSet
 
 router = DefaultRouter()
 
-router.register(r"cars", CarViewSet, basename="car")
+router.register(r"cars", CarViewSet, basename="api-car")
 
 
 urlpatterns = [

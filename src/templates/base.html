@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{title}}</title>
+</head>
+<body>
+    <link rel="stylesheet" href="{% static 'styles/navbar.css' %}">
+    <nav class="navbar">
+        <div class="navbar-left">
+            <a href="/">Главная</a>
+        </div>
+        <div class="navbar-right" id="user-info">
+            <!-- Информация о пользователе будет добавлена здесь через JavaScript -->
+        </div>
+    </nav>
+    {% block content %}
+    {% endblock %}
+    <script>
+        const userInfoDiv = document.getElementById('user-info');
+        const refresh = localStorage.getItem('refresh');
+
+        if (refresh) {
+            fetch("{% url 'api-token_refresh' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({refresh})
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json()
+                } else {
+                    throw new Error('Ошибка при регистрации');
+                }
+            })
+            .then(data => {
+                localStorage.setItem('access', data.access);
+                {#document.cookie = `access=${data.access}; refresh=${data.refresh};`#}
+            })
+            .catch(error => {
+                localStorage.removeItem('access');
+                localStorage.removeItem('refresh');
+                window.location.href = '/login';
+            });
+
+            const username = localStorage.getItem('username');
+
+            userInfoDiv.innerHTML = `
+                <span>${username}</span>
+                <button id="logout-button">Выйти</button>
+            `;
+
+            // Обработка события выхода
+            document.getElementById('logout-button').addEventListener('click', function() {
+                localStorage.removeItem('access'); // Удаляем токен из localStorage
+                localStorage.removeItem('refresh');
+                localStorage.removeItem('username');
+                window.location.href = '/'; // Перенаправляем на главную страницу после выхода
+            });
+        } else {
+            // Если токена нет, показываем кнопки "Войти" и "Зарегистрироваться"
+            userInfoDiv.innerHTML = `
+                <a href="{% url 'login' %}">Войти</a>
+                <a href="{% url 'registration' %}">Зарегистрироваться</a>
+            `;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #007bff;
+    padding: 10px 20px;
+    color: white;
+    height: 30px;
+}
+
+.navbar-left a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-right a {
+    color: white;
+    text-decoration: none;
+    margin-left: 15px;
+}
+
+#logout-button {
+    margin-left: 10px;
+    background-color: #dc3545; /* Bootstrap danger color */
+    color: white; /* Text color */
+    border: none; /* No border */
+    padding: 5px 6px; /* Padding for the button */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+#logout-button:hover {
+    background-color: #c82333; /* Darker shade on hover */
+}

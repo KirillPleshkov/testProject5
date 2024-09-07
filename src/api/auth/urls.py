@@ -8,8 +8,8 @@ from django.urls import path
 from src.api.auth.views import RegisterUser
 
 urlpatterns = [
-    path("register/", RegisterUser.as_view(), name="register"),
-    path("login/", LoginView.as_view(), name="login"),
-    path("token/verify/", TokenVerifyView.as_view(), name="token_verify"),
-    path("token/refresh/", get_refresh_view().as_view(), name="token_refresh"),
+    path("register/", RegisterUser.as_view(), name="api-register"),
+    path("login/", LoginView.as_view(), name="api-login"),
+    path("token/verify/", TokenVerifyView.as_view(), name="api-token_verify"),
+    path("token/refresh/", get_refresh_view().as_view(), name="api-token_refresh"),
 ]

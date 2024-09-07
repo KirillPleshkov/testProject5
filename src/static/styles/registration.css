@@ -1,0 +1,55 @@
+.content {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 94vh;
+    margin: 0;
+}
+
+.registration-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px; /* Увеличиваем ширину карточки */
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: center; /* Центрируем кнопку */
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    text-align: left; /* Выравниваем текст меток по левому краю */
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%; /* Делаем кнопку широкой */
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 10px;
+}

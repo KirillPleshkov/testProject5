@@ -11,7 +11,7 @@
                     <h3>{{ car.make }} {{ car.model }} ({{ car.year }})</h3>
                     <p>{{ car.description }}</p>
                     <div class="button-container">
-                        <a href="" class="car-link">Подробнее</a>
+                        <a href="{% url 'car' car.id %}" class="car-link">Подробнее</a>
                     </div>
                 </div>
             {% empty %}

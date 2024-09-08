@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'styles/car.css' %}" type="text/css">
+    <div class="content">
+        <h2>{{ car.make }} {{ car.model }} ({{ car.year }})</h2>
+        <p>{{ car.description }}</p>
+
+        <h3>Комментарии</h3>
+        <div class="comments">
+            {% for comment in car.comments.all %}
+                <div class="comment">
+                    <strong>{{ comment.author }}</strong>
+                    <p>{{ comment.content }}</p>
+
+                    <small>{{ comment.created_at }}</small>
+                </div>
+            {% empty %}
+                <p>Нет комментариев.</p>
+            {% endfor %}
+        </div>
+
+        <h3>Добавить комментарий</h3>
+        <form id="comment-form">
+            <textarea id="comment-text" placeholder="Ваш комментарий" required></textarea>
+            <button type="submit">Отправить</button>
+        </form>
+    </div>
+    <script>
+    addEventListener('submit', function(event) {
+        event.preventDefault(); // Предотвратить перезагрузку страницы
+
+        const data = {content: document.getElementById('comment-text').value}
+        const access = localStorage.getItem('access')
+        fetch("{% url 'api-car-comments' car.id %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${access}`
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json()
+            } else {
+                throw new Error('Ошибка при регистрации');
+            }
+        })
+        .then(data => {
+            window.location.href = '/car/{{ car.id }}/';
+        })
+        .catch(error => {
+            alert(error.message);
+        });
+
+
+        // Очистка полей ввода
+        document.getElementById('author').value = '';
+        document.getElementById('comment-text').value = '';
+    });
+    </script>
+{% endblock %}

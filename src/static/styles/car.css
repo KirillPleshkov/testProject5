@@ -1,0 +1,104 @@
+/* cars.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+
+}
+
+.content {
+    max-width: 800px;
+    margin: auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+h3 {
+    font-size: 20px;
+    color: #555;
+    margin-top: 20px;
+}
+
+p {
+    font-size: 16px;
+    color: #666;
+}
+
+.comments {
+    margin-top: 20px;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+}
+
+.comment {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.comment strong {
+    display: block;
+    color: #333;
+}
+
+.comment small {
+    color: #999;
+}
+
+.button-container {
+    margin-top: 20px;
+    text-align: right; /* Выравнивание кнопки вправо */
+}
+
+.car-link {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.car-link:hover {
+    background-color: #0056b3;
+}
+
+form {
+    margin-top: 20px;
+    padding-right: 20px;
+}
+
+form input, form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+form button {
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #218838;
+}
+
+textarea {
+    resize: vertical;
+}

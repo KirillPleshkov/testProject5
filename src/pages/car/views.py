@@ -39,3 +39,15 @@ class CreateCarView(TemplateView):
         context = super().get_context_data(id=id, **kwargs)
         context["title"] = "Создание автомобиля"
         return context
+
+
+class ControlCarView(TemplateView):
+    """View для изменения и удаления автомобиля"""
+
+    template_name = "car/car-control.html"
+
+    def get_context_data(self, id: int, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(id=id, **kwargs)
+        context["title"] = "Управление автомобилем"
+        context["car"] = get_object_or_404(Car, id=id)
+        return context

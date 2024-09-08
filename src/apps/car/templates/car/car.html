@@ -7,6 +7,10 @@
         <h2>{{ car.make }} {{ car.model }} ({{ car.year }})</h2>
         <p>{{ car.description }}</p>
 
+        <div class="button-container" id="control-href">
+
+        </div>
+
         <h3>Комментарии</h3>
         <div class="comments">
             {% for comment in car.comments.all %}
@@ -28,6 +32,15 @@
         </form>
     </div>
     <script>
+
+    const controlHref = document.getElementById('control-href');
+
+    if ("{{ car.owner.username }}" === localStorage.getItem('username')) {
+        controlHref.innerHTML = `
+            <a href="{% url 'control-car' car.id %}" class="car-link">Редактировать автомобиль</a>
+        `
+    }
+
     addEventListener('submit', function(event) {
         event.preventDefault(); // Предотвратить перезагрузку страницы
 
@@ -60,5 +73,7 @@
         document.getElementById('author').value = '';
         document.getElementById('comment-text').value = '';
     });
+
+
     </script>
 {% endblock %}

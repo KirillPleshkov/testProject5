@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'styles/car-control.css' %}" type="text/css">
+    <div class="content">
+        <h2>Редактировать {{ car.make }} {{ car.model }} ({{ car.year }})</h2>
+
+        <form id="edit-car-form">
+            <input type="text" id="make" placeholder="Марка" value="{{ car.make }}" required>
+            <input type="text" id="model" placeholder="Модель" value="{{ car.model }}" required>
+            <input type="number" id="year" placeholder="Год" value="{{ car.year }}" required>
+            <textarea id="description" placeholder="Описание" required>{{ car.description }}</textarea>
+            <button type="submit">Сохранить изменения</button>
+        </form>
+
+        <div class="button-container">
+            <button id="delete-car-button">Удалить автомобиль</button>
+        </div>
+    </div>
+
+    <script>
+        const controlHref = document.getElementById('control-href');
+
+        if ("{{ car.owner.username }}" !== localStorage.getItem('username')) {
+            window.location.href = `/car/{{ car.id }}/`;
+        }
+
+        document.getElementById('edit-car-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Предотвратить перезагрузку страницы
+
+            const data = {
+                make: document.getElementById('make').value,
+                model: document.getElementById('model').value,
+                year: document.getElementById('year').value,
+                description: document.getElementById('description').value
+            };
+
+            fetch("{% url 'api-car-detail' car.id %}", {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('access')}`
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Ошибка при обновлении автомобиля');
+                }
+            })
+            .then(data => {
+                window.location.href = `/car/{{ car.id }}/`;
+            })
+            .catch(error => {
+                alert(error.message)
+            });
+        });
+
+        document.getElementById('delete-car-button').addEventListener('click', function() {
+            if (confirm('Вы уверены, что хотите удалить этот автомобиль?')) {
+                fetch("{% url 'api-car-detail' car.id %}", {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('access')}`
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = '/'; // Перенаправление на страницу со списком автомобилей
+                    } else {
+                        throw new Error('Ошибка при удалении автомобиля');
+                    }
+                })
+                .catch(error => {
+                    alert(error.message)
+                });
+            }
+        });
+    </script>
+{% endblock %}

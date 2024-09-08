@@ -24,6 +24,7 @@ class Comment(models.Model):
     class Meta:
         verbose_name = "комментарий"
         verbose_name_plural = "комментарии"
+        ordering = ["-created_at"]
 
     def __str__(self):
         MAX_CONTENT_LEN = 15

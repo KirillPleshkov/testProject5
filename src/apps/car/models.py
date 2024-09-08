@@ -20,6 +20,7 @@ class Car(models.Model):
     class Meta:
         verbose_name = "автомобиль"
         verbose_name_plural = "автомобили"
+        ordering = ["-id"]
 
     def __str__(self):
         return f"{self.make} {self.model} {self.year}г"

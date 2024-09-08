@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'styles/car-create.css' %}" type="text/css">
+    <div class="mainBlock">
+        <div class="content">
+            <h2>Создать новый автомобиль</h2>
+
+            <form id="create-car-form">
+                <input type="text" id="make" placeholder="Марка" required>
+                <input type="text" id="model" placeholder="Модель" required>
+                <input type="number" id="year" placeholder="Год" required>
+                <textarea id="description" placeholder="Описание" required></textarea>
+                <button type="submit">Создать автомобиль</button>
+            </form>
+
+        </div>
+    </div>
+
+
+    <script>
+        const access = localStorage.getItem('access')
+        if (!access) {
+            window.location.href = `/`;
+        }
+        addEventListener('submit', function(event) {
+            event.preventDefault(); // Предотвратить перезагрузку страницы
+
+            const data = {
+                make: document.getElementById('make').value,
+                model: document.getElementById('model').value,
+                year: document.getElementById('year').value,
+                description: document.getElementById('description').value
+            };
+
+            fetch("{% url 'api-car-list' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${access}`
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Ошибка при создании автомобиля');
+                }
+            })
+            .then(data => {
+                window.location.href = `/car/${data.id}/`;
+            })
+            .catch(error => {
+                alert(error.message)
+            });
+        });
+    </script>
+{% endblock %}
